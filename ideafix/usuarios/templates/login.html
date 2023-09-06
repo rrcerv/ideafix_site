@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<style>
+
+</style>
+
+<body>
+    <div class="page">
+        
+        <div class="error-status-whole">
+            {% if status == '0' %}
+                <div class="error-status"> Email ou senha incorretos</div>
+            {% endif %}
+        
+            {% if status == '1' %}
+                <div class="error-status"> Email não cadastrado.</div>
+            {% endif %}
+        
+            {% if status == '2' %}
+                <div class="error-status"> Faça login para entrar no sistema.</div>
+            {% endif %}
+        
+            </div>
+        
+        <div class="content">
+    <div class="title"></div>
+    
+    <div class="formulario">
+    <form action="{% url 'validate_login' %}" method="POST"> 
+        {% csrf_token %}
+        <input type='text' name='email' class="email" placeholder='Digite seu email'>
+        <input type="password" name='senha' class="email-senha" placeholder="Digite sua senha">
+        <input type="Submit" value="ENTRAR">
+
+    </form>
+    </div>
+    
+
+    </form>
+    </div>
+    </div>
+</body>
+</html>

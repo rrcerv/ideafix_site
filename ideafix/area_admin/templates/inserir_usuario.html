@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Usuário</title>
+</head>
+<body>
+    <form action="" method="POST"> {% csrf_token %}
+        <input type='text' name='email' class="email" placeholder='Digite o email do usuário'>
+        <input type="password" name='senha' class="email-senha" placeholder="Digite uma senha para o usuário">
+        <input type="text" name='nome' class="nome" placeholder="Digite um nome para o usuário">
+        <input type="Submit" value="ENVIAR">
+
+    </form>
+</body>
+</html>

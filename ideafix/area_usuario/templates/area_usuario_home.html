@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'area_usuario_home.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Área do usuario
+
+    {% for projetos in projetos_usuario %}
+        <p>{{ projetos.projeto }}</p>
+        <p> {% for links in projetos.links_as_list %}
+            <a href="{{ links }}" target="_blank"> {{ links }} </a>
+        {% endfor %}</p>
+    {% endfor %}
+    
+
+    <a href="{{ url_sair }}">Sair</a>
+</body>
+</html>
