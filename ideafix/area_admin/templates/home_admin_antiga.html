@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Projeto</th>>
+            <th>Links</th>
+        </tr>
+        
+    {% for usuario in todos_usuarios %}
+    <tr>
+        <td>{{ usuario.nome }}</td>
+        
+        {% for projeto in usuario.projetos_set.all %}
+            <td>{{ projeto.projeto }}</td>
+            <td>            {% for links in projeto.links_as_list %}
+                <a href="{{ links }}" target="_blank"> {{ links }} </a>
+            {% endfor %}</td>    
+        {% endfor %}    
+    </tr>
+    {% endfor %}
+
+
+    <a href="{% url 'inserir_usuario' %}">Inserir cliente</a>  <br>       
+    <a href="{% url 'inserir_projeto' %}">Inserir Projeto</a>     <br>   
+    <a href="{% url 'sair_admin' %}">Sair</a>
+
+    </table>
+</body>
+</html>

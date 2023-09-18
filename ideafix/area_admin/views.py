@@ -4,6 +4,7 @@ from area_usuario.models import Projetos
 from usuarios import urls as urls_usuario
 from django.urls import reverse
 import login_admin.views as login_admin_views
+import json
 
 def home_admin(request):
     if request.session.get('admin'):
@@ -26,17 +27,25 @@ def inserir_usuario(request):
 def inserir_projeto(request):
     if request.session.get('admin'):
         todos_usuarios = Usuario.objects.all()
+        todos_usuarios_ls = []
         
         if request.method == 'POST':
-            usuario = Usuario.objects.get(nome=request.POST.get('usuario'))
+            usuario = Usuario.objects.get(nome=request.POST.get('nome'))
             projeto = request.POST.get('projeto')
             links = request.POST.get('links')
             
             novo_projeto = Projetos(usuario = usuario, projeto = projeto, links = links)
             novo_projeto.save()
+               
+        for usuarios in todos_usuarios:
+            todos_usuarios_ls.append(usuarios.nome)
+        
+        users_dic = {'usuarios':todos_usuarios_ls}
+
+        context={"my_list": ["item1", "item2"]}
 
             
-        return render(request, 'inserir_projeto.html', {'todos_usuarios':todos_usuarios})
+        return render(request, 'inserir_projeto.html', {'todos_usuarios':todos_usuarios, 'todos_usuarios_ls':users_dic, 'context':context})
     
     else:
         return redirect(reverse(login_admin_views.login))
