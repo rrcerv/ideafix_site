@@ -4,7 +4,8 @@ from usuarios.models import Usuario
 class Projetos(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.PROTECT)
     projeto = models.TextField()
-    links = models.TextField()
-
-    def links_as_list(self):
-        return self.links.split(',')
+    
+class Links_Projetos(models.Model):
+    projeto = models.ForeignKey(Projetos, on_delete=models.PROTECT)
+    nome_link = models.TextField()
+    link = models.TextField()

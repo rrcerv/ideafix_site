@@ -70,8 +70,8 @@
                   <div style="-webkit-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);transform-style:preserve-3d" class="icon-2 w-icon-dropdown-toggle"></div>
                 </div>
                 <nav class="dropdown-list-2 w-dropdown-list">
-                  {% for links in projeto.links_as_list %}
-                  <a href="{{ links }}" class="dropdown-link-2 w-dropdown-link">{{ links }}</a>
+                  {% for links in projeto.links_projetos_set.all %}
+                  <a href="{{ links.link }}" class="dropdown-link-2 w-dropdown-link">{{ links.nome_link }}</a>
                   {% endfor %}
                 </nav>
               </div>

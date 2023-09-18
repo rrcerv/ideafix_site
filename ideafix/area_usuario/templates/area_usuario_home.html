@@ -12,8 +12,8 @@
 
     {% for projetos in projetos_usuario %}
         <p>{{ projetos.projeto }}</p>
-        <p> {% for links in projetos.links_as_list %}
-            <a href="{{ links }}" target="_blank"> {{ links }} </a>
+        <p> {% for links in projetos.links_projetos_set.all %}
+            <a href="{{ links.link }}" target="_blank"> {{ links.nome_link }} </a>
         {% endfor %}</p>
     {% endfor %}
     

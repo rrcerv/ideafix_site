@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from usuarios.models import Usuario
-from area_usuario.models import Projetos
+from area_usuario.models import Projetos, Links_Projetos
 from usuarios import urls as urls_usuario
 from django.urls import reverse
 import login_admin.views as login_admin_views
@@ -10,6 +10,7 @@ def home_admin(request):
     if request.session.get('admin'):
         todos_usuarios = Usuario.objects.all()
         todos_projetos = Projetos.objects.all()
+        todos_links = Links_Projetos.objects.all()
         return render(request, 'home_admin.html', {'todos_usuarios':todos_usuarios, 'todos_projetos':todos_projetos})
     else:
         return redirect(reverse(login_admin_views.login))
@@ -32,10 +33,16 @@ def inserir_projeto(request):
         if request.method == 'POST':
             usuario = Usuario.objects.get(nome=request.POST.get('nome'))
             projeto = request.POST.get('projeto')
-            links = request.POST.get('links')
-            
-            novo_projeto = Projetos(usuario = usuario, projeto = projeto, links = links)
+            novo_projeto = Projetos(usuario=usuario, projeto=projeto)
             novo_projeto.save()
+
+            for index, link in enumerate(request.POST.get('links').split(',')):
+                nome_links = request.POST.get('nome_links')
+                nome_links = nome_links.split(',')
+                link = link.strip()
+                nome_link = nome_links[index]
+                novo_link = Links_Projetos(link=link, projeto=novo_projeto, nome_link=nome_link)
+                novo_link.save()               
                
         for usuarios in todos_usuarios:
             todos_usuarios_ls.append(usuarios.nome)
