@@ -55,6 +55,58 @@ def inserir_projeto(request):
 
     else:
         return redirect(reverse(login_admin_views.login))
+def editar_projeto(request, user_id, projeto_id):
+    if request.session.get('admin'):
+        todos_usuarios = Usuario.objects.all()
+        todos_usuarios_ls = []
+
+        try:
+            # Retrieve the user and project to edit
+            usuario = Usuario.objects.get(pk=user_id)
+            projeto = Projetos.objects.get(pk=projeto_id, usuario=usuario)
+        except (Usuario.DoesNotExist, Projetos.DoesNotExist):
+            # Handle the case where the user or project does not exist
+            return redirect(reverse('home_admin'))  # Redirect to the home page or an error page
+
+        if request.method == 'POST':
+            # Handle form submission for updating the project
+            projeto.projeto = request.POST.get('projeto')
+            projeto.save()
+
+            # Retrieve link data based on the form structure
+            link_ids = request.POST.getlist('link_id')
+            link_names = request.POST.getlist('link_name')
+            links = request.POST.getlist('link_url')
+
+            # Update or create link objects based on the submitted data
+            for link_id, link_name, link_url in zip(link_ids, link_names, links):
+                if link_id:
+                    # Update an existing link
+                    link = Links_Projetos.objects.get(pk=link_id)
+                    link.link = link_url
+                    link.nome_link = link_name
+                    link.save()
+                else:
+                    # Create a new link
+                    novo_link = Links_Projetos(link=link_url, projeto=projeto, nome_link=link_name)
+                    novo_link.save()
+
+        for usuarios in todos_usuarios:
+            todos_usuarios_ls.append(usuarios.nome)
+
+        users_dic = {'usuarios': todos_usuarios_ls}
+
+        context = {
+            'todos_usuarios': todos_usuarios,
+            'todos_usuarios_ls': users_dic,
+            'projeto': projeto,
+            'links_projetos': projeto.links_projetos.all()  # Get all links associated with the project
+        }
+
+        return render(request, 'editar_projeto.html', context)
+
+    else:
+        return redirect(reverse(login_admin_views.login))
 def sair_admin(request):
     url_login_admin = reverse(login_admin_views.login)
     del request.session['admin']

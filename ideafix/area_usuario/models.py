@@ -6,6 +6,6 @@ class Projetos(models.Model):
     projeto = models.TextField()
     
 class Links_Projetos(models.Model):
-    projeto = models.ForeignKey(Projetos, on_delete=models.PROTECT)
+    projeto = models.ForeignKey(Projetos, on_delete=models.PROTECT,related_name='links_projetos')
     nome_link = models.TextField()
     link = models.TextField()

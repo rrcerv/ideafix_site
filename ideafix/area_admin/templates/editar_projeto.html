@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/area_admin_inserir_projeto.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Projeto</title>
+    <style>
+        /* Include your custom CSS styles here if needed */
+    </style>
+</head>
+<body>
+  {{ todos_usuarios_ls|json_script:"data" }}
+
+  <h1>Editar Projeto</h1>
+
+  <form action="" method="POST" autocomplete="off"> {% csrf_token %}
+    <div class="autocomplete">
+      <input type="text" name='nome' class="nome" id="nome" placeholder="Nome" value="{{ projeto.usuario.nome }}">
+    </div>
+
+    <div class="other_inputs">
+      <input type='text' name='projeto' class="projeto" id="projeto" placeholder='Projeto' value="{{ projeto.projeto }}">
+    </div>
+
+    <div id="link-container">
+      <!-- Dynamically generated link input fields will appear here -->
+      {% for link in links_projetos %}
+      <div class="other_inputs">
+        <input type="text" name="link_name[]" class="link_name" placeholder="Link Name" value="{{ link.nome_link }}">
+        <input type="text" name="link_url[]" class="link_url" placeholder="Link URL" value="{{ link.link }}">
+        <input type="hidden" name="link_id[]" value="{{ link.id }}">
+        <button type="button" class="remove-link">Remove</button>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="button" id="add-link">Add Link</button>
+
+    <input type="Submit" value="Atualizar Projeto">
+  </form>
+
+  <a href="{% url 'home_admin' %}">Home</a>
+
+  <script src="{% static 'js/project.js' %}"></script>
+
+  <script>
+    const value = JSON.parse(document.getElementById('data').textContent);
+    autocomplete(document.getElementById("nome"), value.usuarios);
+  </script>
+</body>
+</html>

@@ -66,13 +66,13 @@
                 <div data-w-id="7801c932-fed2-73cb-2da4-47c142d7108b" class="expand-list w-dropdown-toggle">
                   <div class="text-block-6">description</div>
                   <div>
-                    <h2 class="project-title-list">{{ projeto.projeto }}</h2>
+                    <h2 class="project-title-list">{{ projeto.projeto }}</h2> <a class="dropdown-link-2 w-dropdown-link" href="{% url 'editar_projeto' usuario.id projeto.id %}">Editar</a>
                   </div>
 
                   <div style="-webkit-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0deg) rotateY(0) rotateZ(0deg) skew(0, 0);transform-style:preserve-3d" class="icon-2 w-icon-dropdown-toggle"></div>
                 </div>
                 <nav class="dropdown-list-2 w-dropdown-list">
-                  {% for links in projeto.links_projetos_set.all %}
+                  {% for links in projeto.links_projetos.all %}
                   <a href="{{ links.link }}" class="dropdown-link-2 w-dropdown-link">{{ links.nome_link }}</a>
                   {% endfor %}
                 </nav>
