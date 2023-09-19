@@ -1,5 +1,5 @@
 """
-ASGI config for ideafix project.
+ASGI config for ideafix project.js.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
