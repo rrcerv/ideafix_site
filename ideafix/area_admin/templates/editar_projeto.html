@@ -28,12 +28,18 @@
       <!-- Dynamically generated link input fields will appear here -->
       {% for link in links_projetos %}
       <div class="other_inputs">
-        <input type="text" name="link_name[]" class="link_name" placeholder="Link Name" value="{{ link.nome_link }}">
-        <input type="text" name="link_url[]" class="link_url" placeholder="Link URL" value="{{ link.link }}">
-        <input type="hidden" name="link_id[]" value="{{ link.id }}">
-        <button type="button" class="remove-link">Remove</button>
+        <input type="text" name="link_name" class="link_name" placeholder="Link Name" value="{{ link.nome_link }}">
+        <input type="text" name="link_url" class="link_url" placeholder="Link URL" value="{{ link.link }}">
+          <select name="link_status" class="link_status">
+            {% for status in link.STATUS_CHOICES %}
+                <option value="{{ status.0 }}" {% if link.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+            {% endfor %}
+          </select>
+        <input type="hidden" name="link_id" value="{{ link.id }}">
+        <button type="submit" name="action" value="remove_link" class="remove-link">Remove</button>
       </div>
       {% endfor %}
+
     </div>
 
     <button type="button" id="add-link">Add Link</button>

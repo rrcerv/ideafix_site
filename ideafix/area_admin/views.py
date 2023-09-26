@@ -55,6 +55,7 @@ def inserir_projeto(request):
 
     else:
         return redirect(reverse(login_admin_views.login))
+
 def editar_projeto(request, user_id, projeto_id):
     if request.session.get('admin'):
         todos_usuarios = Usuario.objects.all()
@@ -69,27 +70,54 @@ def editar_projeto(request, user_id, projeto_id):
             return redirect(reverse('home_admin'))  # Redirect to the home page or an error page
 
         if request.method == 'POST':
-            # Handle form submission for updating the project
-            projeto.projeto = request.POST.get('projeto')
-            projeto.save()
+            action = request.POST.get('action')
 
-            # Retrieve link data based on the form structure
-            link_ids = request.POST.getlist('link_id')
-            link_names = request.POST.getlist('link_name')
-            links = request.POST.getlist('link_url')
+            if action == 'remove_link':
+                link_id = request.POST.get('link_id')
+                print(link_id)
+                try:
+                    link = Links_Projetos.objects.get(pk=link_id,projeto=projeto)
+                    link.delete()
+                    # Optionally, you can return a success message or redirect back to the edit page
+                except Links_Projetos.DoesNotExist:
+                    # Handle the case where the link doesn't exist
+                    pass
+            else:
 
-            # Update or create link objects based on the submitted data
-            for link_id, link_name, link_url in zip(link_ids, link_names, links):
-                if link_id:
-                    # Update an existing link
-                    link = Links_Projetos.objects.get(pk=link_id)
-                    link.link = link_url
-                    link.nome_link = link_name
-                    link.save()
-                else:
-                    # Create a new link
-                    novo_link = Links_Projetos(link=link_url, projeto=projeto, nome_link=link_name)
-                    novo_link.save()
+                # Handle form submission for updating the project
+                projeto.projeto = request.POST.get('projeto')
+                projeto.save()
+                print(request.POST.getlist('link_name'))
+                # Retrieve link data based on the form structure
+                link_ids = request.POST.getlist('link_id')
+                link_names = request.POST.getlist('link_name')
+                links = request.POST.getlist('link_url')
+                links_status = request.POST.getlist('link_status')
+                # Update or create link objects based on the submitted data
+                for link_id, link_name, link_url, link_status in zip(link_ids, link_names, links, links_status):
+
+                    if link_id != "novo":
+
+                        # Update an existing link
+                        link = Links_Projetos.objects.get(pk=link_id)
+                        link.link = link_url
+                        link.nome_link = link_name
+                        link.status = link_status
+                        link.save()
+                    else:
+                        # Create a new link
+
+                        novo_link = Links_Projetos(link=link_url, projeto=projeto, nome_link=link_name, status=link_status)
+                        novo_link.save()
+
+                # Check if new link data is provided and create a new link
+                new_link_name = request.POST.getlist('new_link_name')
+                new_link_url = request.POST.getlist('new_link_url')
+
+                for link_name, link_url in zip(new_link_name, new_link_url):
+                    if link_name and link_url:
+                        novo_link = Links_Projetos(link=link_url, projeto=projeto, nome_link=link_name)
+                        novo_link.save()
 
         for usuarios in todos_usuarios:
             todos_usuarios_ls.append(usuarios.nome)

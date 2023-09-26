@@ -12,7 +12,7 @@ def home(request):
         current_user = Usuario.objects.get(id=request.session.get('usuario'))
         projetos_usuario = Projetos.objects.filter(usuario=current_user)
 
-        return render(request,'area_usuario_home.html', {'projetos_usuario' : projetos_usuario, 'url_sair': url_sair})
+        return render(request,'area_usuario_home.html', {'usuario': current_user,'projetos_usuario' : projetos_usuario, 'url_sair': url_sair})
     else:
         login_url = reverse('login') + '?status=0'
         return redirect('login')

@@ -120,23 +120,10 @@ function addLinkInput() {
     linkUrlInput.name = "link_url"; // Use an array for link URLs
     linkUrlInput.placeholder = "Link URL";
 
-    const linkChoicesInput = document.createElement("select");
-//    linkChoicesInput.type = "select";
-    linkChoicesInput.name = "link_status"; // Use an array for link URLs
-    const option1 = document.createElement("option");
-    option1.value = "homologation";
-    option1.text = "Homologação";
-
-    const option2 = document.createElement("option");
-    option2.value = "production";
-    option2.text = "Produção";
-    linkChoicesInput.appendChild(option1);
-    linkChoicesInput.appendChild(option2);
     // Add the input fields to the container div
     linkInputGroup.appendChild(linkNameInput);
     linkInputGroup.appendChild(linkUrlInput);
     linkInputGroup.appendChild(linkIdInput);
-    linkInputGroup.appendChild(linkChoicesInput);
     // Add the container div to the link container
     linkContainer.appendChild(linkInputGroup);
 

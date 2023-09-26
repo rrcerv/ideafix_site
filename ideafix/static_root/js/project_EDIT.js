@@ -95,53 +95,32 @@ function autocomplete(inp, arr) {
       });
       }
 
-
-function addLinkInput() {
+function addLinkInputEdit() {
     const linkContainer = document.getElementById("link-container");
 
     // Create a container div for the link input with name and URL
     const linkInputGroup = document.createElement("div");
 
     // Create an input field for the link name
-    const linkIdInput = document.createElement("input");
-    linkIdInput.type = "hidden";
-    linkIdInput.name = "link_id"; // Use an array for link names
-    linkIdInput.placeholder = "Link id";
-    linkIdInput.value = "novo";
-
     const linkNameInput = document.createElement("input");
     linkNameInput.type = "text";
-    linkNameInput.name = "link_name"; // Use an array for link names
-    linkNameInput.placeholder = "Link Name";
+    linkNameInput.name = "new_link_name"; // Use an array for link names
+    linkNameInput.placeholder = "Novo Link Name";
 
     // Create an input field for the link URL
     const linkUrlInput = document.createElement("input");
     linkUrlInput.type = "text";
-    linkUrlInput.name = "link_url"; // Use an array for link URLs
-    linkUrlInput.placeholder = "Link URL";
+    linkUrlInput.name = "new_link_name"; // Use an array for link URLs
+    linkUrlInput.placeholder = "Novo Link URL";
 
-    const linkChoicesInput = document.createElement("select");
-//    linkChoicesInput.type = "select";
-    linkChoicesInput.name = "link_status"; // Use an array for link URLs
-    const option1 = document.createElement("option");
-    option1.value = "homologation";
-    option1.text = "Homologação";
-
-    const option2 = document.createElement("option");
-    option2.value = "production";
-    option2.text = "Produção";
-    linkChoicesInput.appendChild(option1);
-    linkChoicesInput.appendChild(option2);
     // Add the input fields to the container div
     linkInputGroup.appendChild(linkNameInput);
     linkInputGroup.appendChild(linkUrlInput);
-    linkInputGroup.appendChild(linkIdInput);
-    linkInputGroup.appendChild(linkChoicesInput);
+
     // Add the container div to the link container
     linkContainer.appendChild(linkInputGroup);
 
     // Add autocomplete functionality to the new URL input field
     setupAutocomplete(linkUrlInput, value.links);
 }
-
-document.getElementById("add-link").addEventListener("click", addLinkInput);
+document.getElementById("add-link-edit").addEventListener("click", addLinkInputEdit);
